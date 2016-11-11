@@ -14,6 +14,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -42,6 +43,8 @@ public:
     QTextEdit *mostrar;
     QPushButton *pushButton;
     QPushButton *pushButton_2;
+    QLineEdit *lineEdit;
+    QPushButton *pushButton_3;
     QMenuBar *menubar;
     QMenu *menuArchivo;
     QMenu *menuEditar;
@@ -82,10 +85,16 @@ public:
         mostrar->setGeometry(QRect(620, 20, 161, 261));
         pushButton = new QPushButton(centralwidget);
         pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(640, 310, 80, 23));
+        pushButton->setGeometry(QRect(640, 290, 80, 23));
         pushButton_2 = new QPushButton(centralwidget);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setGeometry(QRect(650, 350, 80, 23));
+        pushButton_2->setGeometry(QRect(640, 320, 80, 23));
+        lineEdit = new QLineEdit(centralwidget);
+        lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        lineEdit->setGeometry(QRect(630, 360, 113, 23));
+        pushButton_3 = new QPushButton(centralwidget);
+        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+        pushButton_3->setGeometry(QRect(640, 390, 80, 23));
         editor->setCentralWidget(centralwidget);
         menubar = new QMenuBar(editor);
         menubar->setObjectName(QStringLiteral("menubar"));
@@ -134,7 +143,8 @@ public:
         actionDeshacer->setText(QApplication::translate("editor", "Deshacer", 0));
         actionRehacer->setText(QApplication::translate("editor", "Rehacer", 0));
         pushButton->setText(QApplication::translate("editor", "actualizar", 0));
-        pushButton_2->setText(QApplication::translate("editor", "PushButton", 0));
+        pushButton_2->setText(QApplication::translate("editor", "mostrar", 0));
+        pushButton_3->setText(QApplication::translate("editor", "buscar", 0));
         menuArchivo->setTitle(QApplication::translate("editor", "Archivo", 0));
         menuEditar->setTitle(QApplication::translate("editor", "Editar", 0));
     } // retranslateUi

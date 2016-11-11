@@ -4,12 +4,12 @@
 # Project:  ../prueba/prueba.pro
 # Template: app
 # Command: /home/roberto/Qt5.5.1/5.5/gcc/bin/qmake -spec linux-g++-32 CONFIG+=debug -o Makefile ../prueba/prueba.pro
-# PROBANDO MAKEFILE
 #############################################################################
 
 MAKEFILE      = Makefile
 
 ####### Compiler, tools and options
+
 ALEPH = ~/aleph
 WARN = -Wall -Wextra -Wcast-align -Wno-sign-compare -Wno-write-strings \
        -Wno-parentheses -Wno-invalid-source-encoding
@@ -20,7 +20,7 @@ CXX           = $(CLANGPATH)/clang++-3.8
 DEFINES       = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -m32 -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES) -g -O0 -std=c++14 $(WARN)
 CXXFLAGS      = -m32 -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES) -g -O0 -std=c++14 $(WARN)
-INCPATH       = -I../prueba -I. -I../../../Qt5.5.1/5.5/gcc/include -I../../../Qt5.5.1/5.5/gcc/include/QtWidgets -I../../../Qt5.5.1/5.5/gcc/include/QtGui -I../../../Qt5.5.1/5.5/gcc/include/QtCore -I. -I. -I../../../Qt5.5.1/5.5/gcc/mkspecs/linux-g++-32 -I. -I $(ALEPH) 
+INCPATH       = -I../prueba -I. -I../../../Qt5.5.1/5.5/gcc/include -I../../../Qt5.5.1/5.5/gcc/include/QtWidgets -I../../../Qt5.5.1/5.5/gcc/include/QtGui -I../../../Qt5.5.1/5.5/gcc/include/QtCore -I. -I. -I../../../Qt5.5.1/5.5/gcc/mkspecs/linux-g++-32 -I. -I $(ALEPH)
 QMAKE         = /home/roberto/Qt5.5.1/5.5/gcc/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -42,7 +42,7 @@ DISTDIR = /home/roberto/Descargas/editor\ proyecto/build-prueba-Desktop_Qt_5_5_1
 LINK          = g++
 LFLAGS        = -m32 -Wl,-rpath,/home/roberto/Qt5.5.1/5.5/gcc -Wl,-rpath,/home/roberto/Qt5.5.1/5.5/gcc/lib
 LIBS          = $(SUBLIBS) -L/home/roberto/Qt5.5.1/5.5/gcc/lib -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread -L $(ALEPH) \
-       -lAleph -lm -lgsl -lgslcblas -lgmp -lmpfr -lpthread -lc 
+       -lAleph -lm -lgsl -lgslcblas -lgmp -lmpfr -lpthread -lc
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -57,16 +57,20 @@ OBJECTS_DIR   = ./
 SOURCES       = ../prueba/main.cpp \
 		../prueba/mainwindow.cpp \
 		../prueba/predictormenu.cpp \
-		../prueba/editor.cpp moc_mainwindow.cpp \
+		../prueba/editor.cpp \
+		../prueba/vbuscar.cpp moc_mainwindow.cpp \
 		moc_predictormenu.cpp \
-		moc_editor.cpp
+		moc_editor.cpp \
+		moc_vbuscar.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		predictormenu.o \
 		editor.o \
+		vbuscar.o \
 		moc_mainwindow.o \
 		moc_predictormenu.o \
-		moc_editor.o
+		moc_editor.o \
+		moc_vbuscar.o
 DIST          = ../../../Qt5.5.1/5.5/gcc/mkspecs/features/spec_pre.prf \
 		../../../Qt5.5.1/5.5/gcc/mkspecs/common/unix.conf \
 		../../../Qt5.5.1/5.5/gcc/mkspecs/common/linux.conf \
@@ -204,10 +208,12 @@ DIST          = ../../../Qt5.5.1/5.5/gcc/mkspecs/features/spec_pre.prf \
 		../prueba/prueba.pro ../prueba/mainwindow.h \
 		../prueba/predictormenu.h \
 		../prueba/editor.h \
-		../prueba/dictnode.H ../prueba/main.cpp \
+		../prueba/dictnode.H \
+		../prueba/vbuscar.h ../prueba/main.cpp \
 		../prueba/mainwindow.cpp \
 		../prueba/predictormenu.cpp \
-		../prueba/editor.cpp
+		../prueba/editor.cpp \
+		../prueba/vbuscar.cpp
 QMAKE_TARGET  = prueba
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = prueba
@@ -235,7 +241,7 @@ first: all
 
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h ui_predictormenu.h ui_editor.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_predictormenu.h ui_editor.h ui_vbuscar.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../prueba/prueba.pro ../../../Qt5.5.1/5.5/gcc/mkspecs/linux-g++-32/qmake.conf ../../../Qt5.5.1/5.5/gcc/mkspecs/features/spec_pre.prf \
@@ -529,9 +535,9 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../prueba/mainwindow.h ../prueba/predictormenu.h ../prueba/editor.h ../prueba/dictnode.H $(DISTDIR)/
-	$(COPY_FILE) --parents ../prueba/main.cpp ../prueba/mainwindow.cpp ../prueba/predictormenu.cpp ../prueba/editor.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../prueba/mainwindow.ui ../prueba/predictormenu.ui ../prueba/editor.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../prueba/mainwindow.h ../prueba/predictormenu.h ../prueba/editor.h ../prueba/dictnode.H ../prueba/vbuscar.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../prueba/main.cpp ../prueba/mainwindow.cpp ../prueba/predictormenu.cpp ../prueba/editor.cpp ../prueba/vbuscar.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../prueba/mainwindow.ui ../prueba/predictormenu.ui ../prueba/editor.ui ../prueba/vbuscar.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -554,9 +560,9 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_predictormenu.cpp moc_editor.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_predictormenu.cpp moc_editor.cpp moc_vbuscar.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_predictormenu.cpp moc_editor.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_predictormenu.cpp moc_editor.cpp moc_vbuscar.cpp
 moc_mainwindow.cpp: ../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QMainWindow \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qmainwindow.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qwidget.h \
@@ -872,6 +878,10 @@ moc_mainwindow.cpp: ../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QMainWindow \
 		../../../Qt5.5.1/5.5/gcc/include/QtGui/qtguiversion.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QFileDialog \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qfiledialog.h \
+		../prueba/vbuscar.h \
+		../prueba/dictnode.H \
+		../../../aleph/tpl_tree_node.H \
+		../../../aleph/tpl_dynArray.H \
 		../prueba/mainwindow.h
 	/home/roberto/Qt5.5.1/5.5/gcc/bin/moc $(DEFINES) -I/home/roberto/Qt5.5.1/5.5/gcc/mkspecs/linux-g++-32 -I'/home/roberto/Descargas/editor proyecto/prueba' -I/home/roberto/Qt5.5.1/5.5/gcc/include -I/home/roberto/Qt5.5.1/5.5/gcc/include/QtWidgets -I/home/roberto/Qt5.5.1/5.5/gcc/include/QtGui -I/home/roberto/Qt5.5.1/5.5/gcc/include/QtCore -I. ../prueba/mainwindow.h -o moc_mainwindow.cpp
 
@@ -1189,6 +1199,10 @@ moc_predictormenu.cpp: ../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QDialog \
 		../../../Qt5.5.1/5.5/gcc/include/QtGui/qtguiversion.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QFileDialog \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qfiledialog.h \
+		../prueba/vbuscar.h \
+		../prueba/dictnode.H \
+		../../../aleph/tpl_tree_node.H \
+		../../../aleph/tpl_dynArray.H \
 		../prueba/predictormenu.h
 	/home/roberto/Qt5.5.1/5.5/gcc/bin/moc $(DEFINES) -I/home/roberto/Qt5.5.1/5.5/gcc/mkspecs/linux-g++-32 -I'/home/roberto/Descargas/editor proyecto/prueba' -I/home/roberto/Qt5.5.1/5.5/gcc/include -I/home/roberto/Qt5.5.1/5.5/gcc/include/QtWidgets -I/home/roberto/Qt5.5.1/5.5/gcc/include/QtGui -I/home/roberto/Qt5.5.1/5.5/gcc/include/QtCore -I. ../prueba/predictormenu.h -o moc_predictormenu.cpp
 
@@ -1504,14 +1518,129 @@ moc_editor.cpp: ../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QMainWindow \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QFileDialog \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qfiledialog.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qdialog.h \
+		../prueba/vbuscar.h \
+		../prueba/dictnode.H \
+		../../../aleph/tpl_tree_node.H \
+		../../../aleph/tpl_dynArray.H \
 		../prueba/editor.h
 	/home/roberto/Qt5.5.1/5.5/gcc/bin/moc $(DEFINES) -I/home/roberto/Qt5.5.1/5.5/gcc/mkspecs/linux-g++-32 -I'/home/roberto/Descargas/editor proyecto/prueba' -I/home/roberto/Qt5.5.1/5.5/gcc/include -I/home/roberto/Qt5.5.1/5.5/gcc/include/QtWidgets -I/home/roberto/Qt5.5.1/5.5/gcc/include/QtGui -I/home/roberto/Qt5.5.1/5.5/gcc/include/QtCore -I. ../prueba/editor.h -o moc_editor.cpp
 
+moc_vbuscar.cpp: ../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QMainWindow \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qmainwindow.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qwidget.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qwindowdefs.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qglobal.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qconfig.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qfeatures.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qsystemdetection.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qprocessordetection.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qcompilerdetection.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qtypeinfo.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qtypetraits.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qsysinfo.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qlogging.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qflags.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qbasicatomic.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic_bootstrap.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qgenericatomic.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic_cxx11.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic_gcc.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic_msvc.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic_armv7.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic_armv6.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic_armv5.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic_ia64.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic_mips.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic_x86.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic_unix.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qglobalstatic.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qmutex.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qnumeric.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qobjectdefs.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qnamespace.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qobjectdefs_impl.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qwindowdefs_win.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qobject.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qstring.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qchar.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qbytearray.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qrefcount.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qarraydata.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qstringbuilder.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qlist.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qalgorithms.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qiterator.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qbytearraylist.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qstringlist.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qregexp.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qstringmatcher.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qcoreevent.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qscopedpointer.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qmetatype.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qvarlengtharray.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qcontainerfwd.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qisenum.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qobject_impl.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qmargins.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qpaintdevice.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qrect.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qsize.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qpoint.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qpalette.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qcolor.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qrgb.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qbrush.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qpair.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qvector.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qmatrix.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qpolygon.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qregion.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qdatastream.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qiodevice.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qline.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qtransform.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qpainterpath.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qimage.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qpixelformat.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qpixmap.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qsharedpointer.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qshareddata.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qhash.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qsharedpointer_impl.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qfont.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qfontmetrics.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qfontinfo.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qsizepolicy.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qcursor.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qkeysequence.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qevent.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qvariant.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qmap.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qdebug.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qtextstream.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qlocale.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qset.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qcontiguouscache.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qurl.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qurlquery.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qfile.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qfiledevice.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qvector2d.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qtouchdevice.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qtabwidget.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qicon.h \
+		../prueba/dictnode.H \
+		../../../aleph/tpl_tree_node.H \
+		../../../aleph/tpl_dynArray.H \
+		../prueba/vbuscar.h
+	/home/roberto/Qt5.5.1/5.5/gcc/bin/moc $(DEFINES) -I/home/roberto/Qt5.5.1/5.5/gcc/mkspecs/linux-g++-32 -I'/home/roberto/Descargas/editor proyecto/prueba' -I/home/roberto/Qt5.5.1/5.5/gcc/include -I/home/roberto/Qt5.5.1/5.5/gcc/include/QtWidgets -I/home/roberto/Qt5.5.1/5.5/gcc/include/QtGui -I/home/roberto/Qt5.5.1/5.5/gcc/include/QtCore -I. ../prueba/vbuscar.h -o moc_vbuscar.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h ui_predictormenu.h ui_editor.h
+compiler_uic_make_all: ui_mainwindow.h ui_predictormenu.h ui_editor.h ui_vbuscar.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h ui_predictormenu.h ui_editor.h
+	-$(DEL_FILE) ui_mainwindow.h ui_predictormenu.h ui_editor.h ui_vbuscar.h
 ui_mainwindow.h: ../prueba/mainwindow.ui
 	/home/roberto/Qt5.5.1/5.5/gcc/bin/uic ../prueba/mainwindow.ui -o ui_mainwindow.h
 
@@ -1520,6 +1649,9 @@ ui_predictormenu.h: ../prueba/predictormenu.ui
 
 ui_editor.h: ../prueba/editor.ui
 	/home/roberto/Qt5.5.1/5.5/gcc/bin/uic ../prueba/editor.ui -o ui_editor.h
+
+ui_vbuscar.h: ../prueba/vbuscar.ui
+	/home/roberto/Qt5.5.1/5.5/gcc/bin/uic ../prueba/vbuscar.ui -o ui_vbuscar.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -1847,6 +1979,10 @@ main.o: ../prueba/main.cpp ../prueba/mainwindow.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtGui/qtguiversion.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QFileDialog \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qfiledialog.h \
+		../prueba/vbuscar.h \
+		../prueba/dictnode.H \
+		../../../aleph/tpl_tree_node.H \
+		../../../aleph/tpl_dynArray.H \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QApplication \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qapplication.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qdesktopwidget.h
@@ -2168,6 +2304,10 @@ mainwindow.o: ../prueba/mainwindow.cpp ../prueba/mainwindow.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtGui/qtguiversion.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QFileDialog \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qfiledialog.h \
+		../prueba/vbuscar.h \
+		../prueba/dictnode.H \
+		../../../aleph/tpl_tree_node.H \
+		../../../aleph/tpl_dynArray.H \
 		ui_mainwindow.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtCore/QVariant \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QAction \
@@ -2519,6 +2659,10 @@ predictormenu.o: ../prueba/predictormenu.cpp ../prueba/predictormenu.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtGui/qtguiversion.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QFileDialog \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qfiledialog.h \
+		../prueba/vbuscar.h \
+		../prueba/dictnode.H \
+		../../../aleph/tpl_tree_node.H \
+		../../../aleph/tpl_dynArray.H \
 		ui_predictormenu.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtCore/QVariant \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QAction \
@@ -2862,6 +3006,10 @@ editor.o: ../prueba/editor.cpp ../prueba/editor.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QFileDialog \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qfiledialog.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qdialog.h \
+		../prueba/vbuscar.h \
+		../prueba/dictnode.H \
+		../../../aleph/tpl_tree_node.H \
+		../../../aleph/tpl_dynArray.H \
 		ui_editor.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtCore/QVariant \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QAction \
@@ -2885,19 +3033,169 @@ editor.o: ../prueba/editor.cpp ../prueba/editor.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qstyle.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qtabbar.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qrubberband.h \
-		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QListWidget \
-		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qlistwidget.h \
-		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qlistview.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QLineEdit \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qlineedit.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QMenu \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qmenu.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QMenuBar \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qmenubar.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QPushButton \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qpushbutton.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qabstractbutton.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QStatusBar \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qstatusbar.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QTextEdit \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qtextedit.h \
 		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o editor.o ../prueba/editor.cpp
+
+vbuscar.o: ../prueba/vbuscar.cpp ../prueba/vbuscar.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QMainWindow \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qmainwindow.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qwidget.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qwindowdefs.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qglobal.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qconfig.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qfeatures.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qsystemdetection.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qprocessordetection.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qcompilerdetection.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qtypeinfo.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qtypetraits.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qsysinfo.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qlogging.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qflags.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qbasicatomic.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic_bootstrap.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qgenericatomic.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic_cxx11.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic_gcc.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic_msvc.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic_armv7.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic_armv6.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic_armv5.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic_ia64.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic_mips.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic_x86.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qatomic_unix.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qglobalstatic.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qmutex.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qnumeric.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qobjectdefs.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qnamespace.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qobjectdefs_impl.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qwindowdefs_win.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qobject.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qstring.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qchar.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qbytearray.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qrefcount.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qarraydata.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qstringbuilder.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qlist.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qalgorithms.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qiterator.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qbytearraylist.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qstringlist.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qregexp.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qstringmatcher.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qcoreevent.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qscopedpointer.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qmetatype.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qvarlengtharray.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qcontainerfwd.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qisenum.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qobject_impl.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qmargins.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qpaintdevice.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qrect.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qsize.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qpoint.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qpalette.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qcolor.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qrgb.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qbrush.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qpair.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qvector.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qmatrix.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qpolygon.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qregion.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qdatastream.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qiodevice.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qline.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qtransform.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qpainterpath.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qimage.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qpixelformat.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qpixmap.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qsharedpointer.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qshareddata.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qhash.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qsharedpointer_impl.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qfont.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qfontmetrics.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qfontinfo.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qsizepolicy.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qcursor.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qkeysequence.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qevent.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qvariant.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qmap.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qdebug.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qtextstream.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qlocale.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qset.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qcontiguouscache.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qurl.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qurlquery.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qfile.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qfiledevice.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qvector2d.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qtouchdevice.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qtabwidget.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qicon.h \
+		../prueba/dictnode.H \
+		../../../aleph/tpl_tree_node.H \
+		../../../aleph/tpl_dynArray.H \
+		ui_vbuscar.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/QVariant \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QAction \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qaction.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qactiongroup.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QApplication \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qapplication.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qcoreapplication.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qeventloop.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qdesktopwidget.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qguiapplication.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qinputmethod.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QButtonGroup \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qbuttongroup.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QHeaderView \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qheaderview.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qabstractitemview.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qabstractscrollarea.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qframe.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qabstractitemmodel.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qitemselectionmodel.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qabstractitemdelegate.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qstyleoption.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qabstractspinbox.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtGui/qvalidator.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtCore/qregularexpression.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qslider.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qabstractslider.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qstyle.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qtabbar.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qrubberband.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QMenuBar \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qmenubar.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qmenu.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QStatusBar \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/qstatusbar.h \
+		../../../Qt5.5.1/5.5/gcc/include/QtWidgets/QWidget
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o vbuscar.o ../prueba/vbuscar.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
@@ -2907,6 +3205,9 @@ moc_predictormenu.o: moc_predictormenu.cpp
 
 moc_editor.o: moc_editor.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_editor.o moc_editor.cpp
+
+moc_vbuscar.o: moc_vbuscar.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_vbuscar.o moc_vbuscar.cpp
 
 ####### Install
 

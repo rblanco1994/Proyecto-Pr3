@@ -15,13 +15,16 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     predictormenu.cpp \
-    editor.cpp
+    editor.cpp \
+    vbuscar.cpp
 
 HEADERS  += mainwindow.h \
     predictormenu.h \
     editor.h \
-    dictnode.H
+    dictnode.H \
+    vbuscar.h
 
 FORMS    += mainwindow.ui \
     predictormenu.ui \
-    editor.ui
+    editor.ui \
+    vbuscar.ui

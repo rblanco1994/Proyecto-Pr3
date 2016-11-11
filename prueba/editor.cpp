@@ -136,3 +136,22 @@ void editor::on_pushButton_2_clicked()
 {
     ui->mostrar->setPlainText(QString::fromStdString(nodo->to_str()));
 }
+
+void editor::on_pushButton_3_clicked()
+{
+    vbuscar *buscar = new vbuscar(this);
+    if(nodo->contains(ui->lineEdit->text().toStdString()))
+    {
+        buscar->insertar_palabra(ui->lineEdit->text());
+    }
+    else
+    {
+        buscar->insertar_palabra("No contenida");
+    }
+    buscar->show();
+}
+
+QString editor::mostrar_palabra()
+{
+    return ui->lineEdit->text();
+}

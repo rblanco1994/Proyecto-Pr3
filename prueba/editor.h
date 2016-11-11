@@ -5,7 +5,9 @@
 #include <QtCore>
 #include <QtGui>
 #include <QFileDialog>
+#include <vbuscar.h>
 #include "dictnode.H"
+
 
 namespace Ui {
 class editor;
@@ -18,6 +20,7 @@ class editor : public QMainWindow
 public:
     explicit editor(QWidget *parent = 0);
     ~editor();
+    QString mostrar_palabra();
 
 private slots:
     void on_actionNuevo_triggered();
@@ -42,6 +45,8 @@ private slots:
     void on_pushButton_clicked();
 
     void on_pushButton_2_clicked();
+
+    void on_pushButton_3_clicked();
 
 private:
     Ui::editor *ui;
