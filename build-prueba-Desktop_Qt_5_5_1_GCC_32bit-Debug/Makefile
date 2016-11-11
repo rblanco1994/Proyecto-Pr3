@@ -4,6 +4,7 @@
 # Project:  ../prueba/prueba.pro
 # Template: app
 # Command: /home/roberto/Qt5.5.1/5.5/gcc/bin/qmake -spec linux-g++-32 CONFIG+=debug -o Makefile ../prueba/prueba.pro
+# PROBANDO MAKEFILE
 #############################################################################
 
 MAKEFILE      = Makefile
