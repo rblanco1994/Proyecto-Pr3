@@ -39,7 +39,7 @@ void texteditpredictor::completar(const QString& complete)
     int extra = complete.length() - completer->completionPrefix().length();
     tc.movePosition(QTextCursor::Left);
     tc.movePosition(QTextCursor::EndOfWord);
-    tc.insertText(complete.right(extra));
+    tc.insertText(complete.right(extra) + " ");
     setTextCursor(tc);
 }
 

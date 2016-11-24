@@ -46,8 +46,65 @@
     <addaction name="actionDeshacer"/>
     <addaction name="actionRehacer"/>
    </widget>
+   <widget class="QMenu" name="menuPreferencias_2">
+    <property name="title">
+     <string>Preferencias</string>
+    </property>
+    <widget class="QMenu" name="menuColor_de_Letra">
+     <property name="title">
+      <string>Color de Letra</string>
+     </property>
+     <addaction name="actionTexto_Rojo"/>
+     <addaction name="actionTexto_Azul"/>
+     <addaction name="actionTexto_Verde"/>
+     <addaction name="actionTexto_Morado"/>
+     <addaction name="actionTexto_Negro"/>
+    </widget>
+    <widget class="QMenu" name="menuType_Here">
+     <property name="title">
+      <string>Type Here</string>
+     </property>
+    </widget>
+    <widget class="QMenu" name="menuTipo_de_Letra_2">
+     <property name="title">
+      <string>Tipo de Letra</string>
+     </property>
+     <addaction name="actionTimes"/>
+     <addaction name="actionHelvetica_Cronyx"/>
+     <addaction name="actionCourier"/>
+     <addaction name="actionOldEnglish"/>
+     <addaction name="actionPor_Defecto_Monospace"/>
+    </widget>
+    <widget class="QMenu" name="menuTama_o_de_Letra_2">
+     <property name="title">
+      <string>Tamaño de Letra</string>
+     </property>
+     <addaction name="action10"/>
+     <addaction name="action12"/>
+     <addaction name="action14"/>
+     <addaction name="action16"/>
+    </widget>
+    <widget class="QMenu" name="menuTemas_2">
+     <property name="title">
+      <string>Temas</string>
+     </property>
+     <addaction name="actionOblivion"/>
+     <addaction name="actionDarkBlue"/>
+     <addaction name="actionRedSkin"/>
+     <addaction name="actionRoyalGold"/>
+     <addaction name="actionBlack_Orange"/>
+     <addaction name="actionClasico"/>
+    </widget>
+    <addaction name="menuColor_de_Letra"/>
+    <addaction name="menuTipo_de_Letra_2"/>
+    <addaction name="menuTama_o_de_Letra_2"/>
+    <addaction name="separator"/>
+    <addaction name="menuTemas_2"/>
+    <addaction name="menuType_Here"/>
+   </widget>
    <addaction name="menuArchivo"/>
    <addaction name="menuEdicion"/>
+   <addaction name="menuPreferencias_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNuevo">
@@ -98,6 +155,131 @@
   <action name="actionRehacer">
    <property name="text">
     <string>Rehacer</string>
+   </property>
+  </action>
+  <action name="actionTexto_Rojo">
+   <property name="text">
+    <string>Texto Rojo</string>
+   </property>
+  </action>
+  <action name="actionTexto_Azul">
+   <property name="text">
+    <string>Texto Azul</string>
+   </property>
+  </action>
+  <action name="actionTexto_Verde">
+   <property name="text">
+    <string>Texto Verde</string>
+   </property>
+  </action>
+  <action name="actionTexto_Negro">
+   <property name="text">
+    <string>Texto Negro</string>
+   </property>
+  </action>
+  <action name="actionFondo_Negro">
+   <property name="text">
+    <string>Fondo Negro</string>
+   </property>
+  </action>
+  <action name="actionFondo_Gris">
+   <property name="text">
+    <string>Fondo Gris</string>
+   </property>
+  </action>
+  <action name="actionFondo_Azul">
+   <property name="text">
+    <string>Fondo Azul</string>
+   </property>
+  </action>
+  <action name="actionFondo_Blanco">
+   <property name="text">
+    <string>Fondo Blanco</string>
+   </property>
+  </action>
+  <action name="actionOblivion">
+   <property name="text">
+    <string>Oblivion</string>
+   </property>
+  </action>
+  <action name="actionDarkBlue">
+   <property name="text">
+    <string>DarkBlue</string>
+   </property>
+  </action>
+  <action name="actionRedSkin">
+   <property name="text">
+    <string>RedSkin</string>
+   </property>
+  </action>
+  <action name="actionClasico">
+   <property name="text">
+    <string>Clasico</string>
+   </property>
+  </action>
+  <action name="actionTexto_Morado">
+   <property name="text">
+    <string>Texto Morado</string>
+   </property>
+  </action>
+  <action name="actionBlack_Orange">
+   <property name="text">
+    <string>Black-Orange</string>
+   </property>
+  </action>
+  <action name="actionTimes">
+   <property name="text">
+    <string>Times</string>
+   </property>
+  </action>
+  <action name="actionHelvetica_Cronyx">
+   <property name="text">
+    <string>Helvetica [Cronyx]</string>
+   </property>
+  </action>
+  <action name="actionCourier">
+   <property name="text">
+    <string>Courier</string>
+   </property>
+  </action>
+  <action name="actionOldEnglish">
+   <property name="text">
+    <string>OldEnglish</string>
+   </property>
+  </action>
+  <action name="action10">
+   <property name="text">
+    <string>10</string>
+   </property>
+  </action>
+  <action name="action12">
+   <property name="text">
+    <string>12</string>
+   </property>
+  </action>
+  <action name="action14">
+   <property name="text">
+    <string>14</string>
+   </property>
+  </action>
+  <action name="action16">
+   <property name="text">
+    <string>16</string>
+   </property>
+  </action>
+  <action name="actionRoyalGold">
+   <property name="text">
+    <string>RoyalGold</string>
+   </property>
+  </action>
+  <action name="actionH">
+   <property name="text">
+    <string>h</string>
+   </property>
+  </action>
+  <action name="actionPor_Defecto_Monospace">
+   <property name="text">
+    <string>Por Defecto (Monospace)</string>
    </property>
   </action>
  </widget>

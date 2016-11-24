@@ -13,14 +13,16 @@ ventanapredictor::ventanapredictor(QWidget *parent) :
     QStringListModel *model = new QStringListModel(stringList);
     completer = new QCompleter(model, this);
 
-    //completer = new QCompleter(lista, this);
-    //completer->setModel(modelFromFile(":/resources/wordlist.txt"));
     completer->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
     completer->setCaseSensitivity(Qt::CaseInsensitive);
     completer->setWrapAround(false);
     TextEditor->setCompleter(completer);
     connect(TextEditor,SIGNAL(textChanged()),this,SLOT(on_textEditor_textChanged()));
 
+    currentTextType = "Monospace";
+    QFont f("Monospace",10, QFont::Normal);
+    TextEditor->setFont(f);
+    CurrentTextSize = 10;
 
     setCentralWidget(TextEditor);
     resize(800, 500);
@@ -34,14 +36,7 @@ ventanapredictor::~ventanapredictor()
 
 void ventanapredictor::on_actionNuevo_triggered()
 {
-    Cnode *node = new Cnode('a');
-    nodo->insert_child(node);
-    //std::string aux;
-    Cnode *aux = nodo->search_child('a');
-    std::string aux2;
-    aux2 = (aux->symbol());
-    texto = QString::fromStdString(aux2);
-    TextEditor->setPlainText(texto);
+    TextEditor->setPlainText("");
 }
 
 void ventanapredictor::on_actionAbrir_triggered()
@@ -186,11 +181,168 @@ void ventanapredictor::on_textEditor_textChanged()
            lista << QString::fromStdString(palabra);
        });
 
-
-       //completer = new QCompleter(lista,this);  //AGREGADO COMPLETER
        QStringListModel *model = (QStringListModel*)(completer->model());
-
-
        model->setStringList(lista);
 
+}
+
+void ventanapredictor::on_actionTexto_Rojo_triggered()
+{
+    TextEditor->setStyleSheet("QTextEdit { "+ currentBackground +" color:red } ");
+}
+
+void ventanapredictor::on_actionTexto_Azul_triggered()
+{
+    TextEditor->setStyleSheet("QTextEdit { "+ currentBackground +" color:blue } ");
+}
+
+void ventanapredictor::on_actionTexto_Verde_triggered()
+{
+    TextEditor->setStyleSheet("QTextEdit { "+ currentBackground +" color:green } ");
+}
+
+void ventanapredictor::on_actionTexto_Negro_triggered()
+{
+    TextEditor->setStyleSheet("QTextEdit { "+ currentBackground +" color:black } ");
+}
+
+
+void ventanapredictor::on_actionOblivion_triggered()
+{
+    TextEditor->setStyleSheet("QTextEdit { background-color:dimgray; color:white } ");
+    currentBackground = "background-color:dimgray;";
+}
+
+void ventanapredictor::on_actionDarkBlue_triggered()
+{
+    TextEditor->setStyleSheet("QTextEdit { background-color:midnightblue; color:lightgray } ");
+    currentBackground = "background-color:midnightblue;";
+}
+
+void ventanapredictor::on_actionRedSkin_triggered()
+{
+    TextEditor->setStyleSheet("QTextEdit { background-color:maroon; color:white } ");
+    currentBackground = "background-color:maroon;";
+}
+
+void ventanapredictor::on_actionClasico_triggered()
+{
+    TextEditor->setStyleSheet("QTextEdit { background-color:white; color:black } ");
+    currentBackground = "background-color:white;";
+}
+
+void ventanapredictor::on_actionTexto_Morado_triggered()
+{
+    TextEditor->setStyleSheet("QTextEdit { "+ currentBackground +" color:indigo } ");
+}
+
+void ventanapredictor::on_actionBlack_Orange_triggered()
+{
+    TextEditor->setStyleSheet("QTextEdit { background-color:black; color:darkorange } ");
+    currentBackground = "background-color:black;";
+}
+
+void ventanapredictor::on_actionTimes_triggered()
+{
+    currentTextType = "Times";
+    QFont serifFont("Times", CurrentTextSize, QFont::Normal);
+    TextEditor->setFont(serifFont);
+}
+
+void ventanapredictor::on_actionHelvetica_Cronyx_triggered()
+{
+    currentTextType = "Helvetica";
+    QFont f("Helvetica",CurrentTextSize, QFont::DemiBold);
+    TextEditor->setFont(f);
+}
+
+void ventanapredictor::on_actionCourier_triggered()
+{
+    currentTextType = "Courier";
+    QFont f("Courier",CurrentTextSize, QFont::Normal);
+    TextEditor->setFont(f);
+}
+
+void ventanapredictor::on_actionOldEnglish_triggered()
+{
+    currentTextType = "OldEnglish";
+    QFont f("OldEnglish",CurrentTextSize, QFont::Normal);
+    TextEditor->setFont(f);
+}
+
+void ventanapredictor::on_action10_triggered()
+{
+    if(currentTextType == "Helvetica")
+    {
+        QFont f(currentTextType,10, QFont::DemiBold);
+        TextEditor->setFont(f);
+        CurrentTextSize = 10;
+    }
+    else
+    {
+        QFont f(currentTextType,10, QFont::Normal);
+        TextEditor->setFont(f);
+        CurrentTextSize = 10;
+    }
+}
+
+void ventanapredictor::on_action12_triggered()
+{
+    if(currentTextType == "Helvetica")
+    {
+        QFont f(currentTextType,12, QFont::DemiBold);
+        TextEditor->setFont(f);
+        CurrentTextSize = 12;
+    }
+    else
+    {
+        QFont f(currentTextType,12, QFont::Normal);
+        TextEditor->setFont(f);
+        CurrentTextSize = 12;
+    }
+}
+
+void ventanapredictor::on_action14_triggered()
+{
+    if(currentTextType == "Helvetica")
+    {
+        QFont f(currentTextType,14, QFont::DemiBold);
+        TextEditor->setFont(f);
+        CurrentTextSize = 14;
+    }
+    else
+    {
+        QFont f(currentTextType,14, QFont::Normal);
+        TextEditor->setFont(f);
+        CurrentTextSize = 14;
+    }
+}
+
+void ventanapredictor::on_action16_triggered()
+{
+    if(currentTextType == "Helvetica")
+    {
+        QFont f(currentTextType,16, QFont::DemiBold);
+        TextEditor->setFont(f);
+        CurrentTextSize = 16;
+    }
+    else
+    {
+        QFont f(currentTextType,16, QFont::Normal);
+        TextEditor->setFont(f);
+        CurrentTextSize = 16;
+    }
+}
+
+void ventanapredictor::on_actionRoyalGold_triggered()
+{
+    TextEditor->setStyleSheet("QTextEdit { background-color:lightseagreen; color:gold } ");
+    currentBackground = "background-color:lightseagreen;";
+}
+
+void ventanapredictor::on_actionPor_Defecto_Monospace_triggered()
+{
+    currentTextType = "Monospace";
+    QFont f("Monospace",CurrentTextSize, QFont::Normal);
+    TextEditor->setFont(f);
 }
